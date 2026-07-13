@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 12%;
+
+    --primary: 220 70% 32%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 215 25% 12%;
+
+    --muted: 214 20% 94%;
+    --muted-foreground: 215 15% 48%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 87%;
+    --input: 214 20% 87%;
+    --ring: 220 70% 32%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 215 28% 17%;
+    --sidebar-foreground: 210 20% 88%;
+    --sidebar-primary: 38 92% 50%;
+    --sidebar-primary-foreground: 215 28% 12%;
+    --sidebar-accent: 215 25% 22%;
+    --sidebar-accent-foreground: 210 20% 88%;
+    --sidebar-border: 215 22% 24%;
+    --sidebar-ring: 38 92% 50%;
+
+    --contract-bg: 0 0% 100%;
+    --contract-border: 215 20% 80%;
+    --contract-heading: 220 70% 25%;
+    --contract-text: 215 20% 18%;
+    --form-bg: 215 28% 17%;
+    --form-text: 210 20% 92%;
+    --form-label: 210 20% 72%;
+    --form-border: 215 22% 28%;
+    --form-input-bg: 215 25% 22%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .contract-font {
+    font-family: 'Noto Serif', serif;
+  }
+}
+
+@layer components {
+  .form-panel {
+    background: hsl(var(--form-bg));
+    color: hsl(var(--form-text));
+  }
+
+  .form-label-style {
+    color: hsl(var(--form-label));
+    @apply text-xs font-medium uppercase tracking-wide;
+  }
+
+  .form-input-style {
+    background: hsl(var(--form-input-bg));
+    border-color: hsl(var(--form-border));
+    color: hsl(var(--form-text));
+    @apply rounded px-3 py-2 text-sm w-full border focus:outline-none focus:ring-1;
+    ring-color: hsl(var(--sidebar-primary));
+  }
+
+  .form-input-style:focus {
+    border-color: hsl(var(--sidebar-primary));
+    outline: none;
+    box-shadow: 0 0 0 1px hsl(var(--sidebar-primary));
+  }
+
+  .form-select-style {
+    background: hsl(var(--form-input-bg));
+    border-color: hsl(var(--form-border));
+    color: hsl(var(--form-text));
+    @apply rounded px-3 py-2 text-sm w-full border focus:outline-none cursor-pointer;
+  }
+
+  .form-select-style option {
+    background: hsl(215 28% 22%);
+  }
+
+  .contract-table {
+    @apply w-full border-collapse contract-font;
+    font-size: 8pt;
+    line-height: 1.5;
+  }
+
+  .contract-table td {
+    @apply border border-gray-400 align-top p-2;
+    vertical-align: top;
+  }
+
+  .contract-table .header-cell {
+    @apply bg-gray-100 font-bold text-center;
+    font-size: 9pt;
+  }
+
+  .clause-ru {
+    @apply text-gray-900;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .clause-en {
+    @apply text-gray-800;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .clause-bold {
+    @apply font-bold;
+  }
+
+  .contract-preview-container {
+    background: white;
+    @apply shadow-lg;
+  }
+
+  .btn-primary {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    @apply px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer;
+  }
+
+  .btn-accent {
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    @apply px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer;
+  }
+
+  .btn-secondary {
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    @apply px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer;
+  }
+
+  .btn-ghost {
+    @apply px-3 py-2 rounded text-sm font-medium transition-all cursor-pointer;
+    color: hsl(var(--sidebar-foreground));
+  }
+
+  .btn-ghost:hover {
+    background: hsl(var(--sidebar-accent));
+  }
+
+  .section-divider {
+    border-color: hsl(var(--form-border));
+    @apply border-t my-4;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(215 28% 14%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(215 22% 35%);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(215 22% 45%);
+}
+
+/* Print styles for PDF export */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .contract-preview-container {
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hide non-contract UI */
+  header, nav, .sidebar, [class*='Header'], [class*='Toolbar'] {
+    display: none !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 10mm 8mm 10mm 8mm;
+  }
+
+  table {
+    page-break-inside: auto;
+    border-collapse: collapse;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  td {
+    page-break-inside: avoid;
+  }
+}
