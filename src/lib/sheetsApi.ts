@@ -191,10 +191,15 @@ export async function saveContractToSheet(
 ): Promise<void> {
   // Map currency codes to display names for Sheets
   const CURRENCY_DISPLAY: Record<string, string> = { UZS: 'СУМ', KZT: 'ТЕНГЕ' };
+  // Map expeditor display names for Sheets (column C)
+  const EXPEDITOR_DISPLAY: Record<string, string> = {
+    'ИП ООО «LOGITRANS UZBEKISTAN»': 'OOO «Logitrans Uzbekistan»',
+  };
   const basePayload = {
     ...row,
     contractDate: toDisplayDate(row.contractDate),
     currency: CURRENCY_DISPLAY[row.currency] ?? row.currency,
+    expeditor: EXPEDITOR_DISPLAY[row.expeditor] ?? row.expeditor,
   };
 
   // 1. Fetch active main sheets from DB
