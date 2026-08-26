@@ -470,6 +470,15 @@ Yükleme (boşaltma) altındaki fiili durma süreleri şu şekilde hesaplanır:
       isActive: true,
       isHeader: false,
     },
+    {
+      id: 's3_16',
+      itemNumber: '3.16.',
+      contentRu: 'Любое состояние войны (включая дополнительные расходы, возникающие в связи с изменением маршрута и увеличением сроков перевозки по данной причине), изменения в квотах или таможенных процедурах, любые новые нормативно-правовые акты в сфере транспорта и иные непредвиденные обстоятельства, приведшие к увеличению расходов ПЕРЕВОЗЧИКА после заключения настоящего договора, влекут за собой дополнительные расходы, не входящие в стоимость фрахта. Данные расходы подлежат единовременной оплате наличными/безналичными средствами со стороны КОМПАНИИ в пользу ПЕРЕВОЗЧИКА. КОМПАНИЯ заранее принимает и обязуется выполнять данное условие. В связи с этим КОМПАНИЯ не имеет права требовать от ПЕРЕВОЗЧИКА компенсации или каких-либо выплат за возможные задержки, возникшие по указанным причинам.',
+      contentEn: "Any state of war (including additional costs arising from route changes and extended transit times due to such circumstances), changes in quotas or customs procedures, any new regulations introduced into transportation legislation, and, without limitation, any additional costs arising from an increase in the CARRIER's transportation expenses after the execution of this contract, are excluded from the freight charges and shall be paid in cash and as a lump sum by the COMPANY to the CARRIER. The COMPANY acknowledges and undertakes this condition in advance. Consequently, the COMPANY shall not be entitled to claim any compensation or fees from the CARRIER for potential delays arising from these reasons.",
+      contentTr: "Herhangi bir savaş hâli (bu duruma bağlı güzergâh değişikliği ve taşıma süresinin uzaması sebebiyle ortaya çıkacak ek bedeller dâhil), kotalarda veya gümrük işlemlerinde yapılacak değişiklikler, ulaştırma mevzuatına getirilecek bilumum yeni uygulamalar ve bunlarla sınırlı olmamak üzere, işbu sözleşmenin tanzim edilmesinden sonra TAŞIYICI'nın taşıma bedellerinin artması durumunda ortaya çıkacak tüm ek bedeller navlun bedeli dışında olup FİRMA tarafından TAŞIYICI'ya nakden ve defaten ödenecektir. FİRMA işbu hususu peşinen kabul ve taahhüt eder. Bu sebeple gündeme gelebilecek olası gecikmelere bağlı olarak FİRMA tarafından TAŞIYICI'dan herhangi bir bedel talep edilemeyecektir.",
+      isActive: true,
+      isHeader: false,
+    },
 
     // ─── Section 4 ───────────────────────────────────────────────────────────
     {
