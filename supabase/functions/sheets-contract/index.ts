@@ -86,11 +86,12 @@ const HEADER_ROW = [
   'Менеджер Logitrans', 'Email', 'Мобильный телефон', 'Городской телефон',
   'БИН/ИИН', 'Страна', 'Город', 'Адрес', 'Директор', 'Валюта', 'Сумма договора',
   'ИИК(Счета)', 'Название банка', 'БИК(Swift)',
-  'Номер договора', 'Дата договора', 'Файл', 'Ссылка на файл', 'Дата добавления'
+  'Номер договора', 'Дата договора', 'Файл', 'Ссылка на файл', 'Дата добавления',
+  'Google Drive Ссылка'
 ];
 
 async function ensureHeaderRow(accessToken: string, spreadsheetId = SPREADSHEET_ID, sheetName = SHEET_NAME): Promise<void> {
-  const range = encodeURIComponent(`${sheetName}!A1:W1`);
+  const range = encodeURIComponent(`${sheetName}!A1:X1`);
   const resp = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
@@ -99,7 +100,7 @@ async function ensureHeaderRow(accessToken: string, spreadsheetId = SPREADSHEET_
   const data = await resp.json();
   const firstRow: string[] = data.values?.[0] || [];
   if (firstRow[0] === 'Anlaşma Durumu') return;
-  const insertRange = encodeURIComponent(`${sheetName}!A1:W1`);
+  const insertRange = encodeURIComponent(`${sheetName}!A1:X1`);
   await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${insertRange}?valueInputOption=USER_ENTERED`,
     {
@@ -451,7 +452,7 @@ Deno.serve(async (req: Request) => {
         clientName, country, city, address, director, email,
         mobilePhone, officePhone, bin, sector,
         currency, contractAmount, account, bankName, swift,
-        pdfLink, status,
+        pdfLink, driveLink, status,
         targetSpreadsheetId, targetSheetName,
       } = body;
 
@@ -502,6 +503,7 @@ Deno.serve(async (req: Request) => {
         fileDesc,
         pdfLink || '',
         new Date().toLocaleString('ru-RU'),
+        driveLink || '',
       ];
 
       await ensureHeaderRow(accessToken, activeSpreadsheetId, activeSheetName);
@@ -510,7 +512,7 @@ Deno.serve(async (req: Request) => {
       let sheetsResp;
 
       if (existingRow) {
-        const range = encodeURIComponent(`${activeSheetName}!A${existingRow}:W${existingRow}`);
+        const range = encodeURIComponent(`${activeSheetName}!A${existingRow}:X${existingRow}`);
         sheetsResp = await fetch(
           `https://sheets.googleapis.com/v4/spreadsheets/${activeSpreadsheetId}/values/${range}?valueInputOption=USER_ENTERED`,
           {
@@ -523,7 +525,7 @@ Deno.serve(async (req: Request) => {
           }
         );
       } else {
-        const range = encodeURIComponent(`${activeSheetName}!A:W`);
+        const range = encodeURIComponent(`${activeSheetName}!A:X`);
         sheetsResp = await fetch(
           `https://sheets.googleapis.com/v4/spreadsheets/${activeSpreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
           {

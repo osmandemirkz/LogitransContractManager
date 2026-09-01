@@ -82,6 +82,7 @@ export interface SheetContractRow {
   swift?: string;
   status: string;
   pdfLink?: string;
+  driveLink?: string;
 }
 
 /** Build Drive-friendly file name: "OOO MAGNA MEBEL Договор № UZ134 от 20.04.2026" */
@@ -200,6 +201,7 @@ export async function saveContractToSheet(
     contractDate: toDisplayDate(row.contractDate),
     currency: CURRENCY_DISPLAY[row.currency] ?? row.currency,
     expeditor: EXPEDITOR_DISPLAY[row.expeditor] ?? row.expeditor,
+    driveLink: row.driveLink ?? '',
   };
 
   // 1. Fetch active main sheets from DB

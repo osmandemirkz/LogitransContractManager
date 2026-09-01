@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ContractFormData } from '@/types/contract';
 import { downloadAsWord } from '@/lib/exportUtils';
@@ -93,7 +92,8 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({
    * "PDF Upload" flow:
    * 1. Show file picker to upload the saved PDF
    * 2. Upload to Supabase Storage
-   * 3. Save row in Google Sheets with pdfLink + status İmzalandı
+   * 3. Upload to Google Drive (await, capture driveUrl)
+   * 4. Save row in Google Sheets with pdfLink (Supabase) + driveLink (Drive) + status İmzalandı
    */
   const handleSendFinalPdf = async () => {
     if (!data.clientInfo.contractNumber) {
@@ -117,32 +117,32 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({
           data.clientInfo.companyName,
         );
 
-        // Also upload to manager's Google Drive folder
+        // Upload to Google Drive and capture the link
+        let driveUrl: string | null = null;
         if (managerDriveFolderId?.trim()) {
           const driveFileName = buildContractFileName(
             data.clientInfo.companyName,
             data.clientInfo.contractNumber,
             data.clientInfo.contractDate,
           );
-          uploadContractPdfToDrive(file, driveFileName, managerDriveFolderId)
-            .then(driveUrl => {
-              if (driveUrl) {
-                toast.success('✓ Google Drive\'a kaydedildi');
-                console.log('[ExportOptions] Drive upload success:', driveUrl);
-              }
-            })
-            .catch(e => {
-              const msg: string = e?.message || '';
-              if (msg.includes('storage quota') || msg.includes('Shared Drive') || msg.includes('shared drives')) {
-                toast.warning(
-                  'Google Drive: Servis hesabı kişisel klasöre yazamaz',
-                  { description: '"Shared Drive (Ortak Drive)" oluşturup servis hesabını oraya ekleyin. PDF Supabase\'e kaydedildi.' }
-                );
-              } else {
-                toast.warning('Google Drive yüklenemedi — PDF Supabase\'e kaydedildi', { description: msg });
-              }
-              console.warn('[ExportOptions] Drive upload failed:', msg);
-            });
+          try {
+            driveUrl = await uploadContractPdfToDrive(file, driveFileName, managerDriveFolderId);
+            if (driveUrl) {
+              toast.success("✓ Google Drive'a kaydedildi");
+              console.log('[ExportOptions] Drive upload success:', driveUrl);
+            }
+          } catch (e: any) {
+            const msg: string = e?.message || '';
+            if (msg.includes('storage quota') || msg.includes('Shared Drive') || msg.includes('shared drives')) {
+              toast.warning(
+                'Google Drive: Servis hesabı kişisel klasöre yazamaz',
+                { description: '"Shared Drive (Ortak Drive)" oluşturup servis hesabını oraya ekleyin. PDF Supabase\'e kaydedildi.' }
+              );
+            } else {
+              toast.warning("Google Drive yüklenemedi — PDF Supabase'e kaydedildi", { description: msg });
+            }
+            console.warn('[ExportOptions] Drive upload failed:', msg);
+          }
         }
 
         await saveContractToSheet(
@@ -168,6 +168,7 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({
             swift: data.clientInfo.swift,
             status: 'Подписан ✓',
             pdfLink: pdfUrl,
+            driveLink: driveUrl || '',
           },
           extraSheets,
         );
